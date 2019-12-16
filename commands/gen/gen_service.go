@@ -48,7 +48,7 @@ func doGenService(parser *gcmd.Parser) {
 	prefixArray := gstr.SplitAndTrim(parser.GetOpt("prefix"), ",")
 	moduleName := parser.GetOpt("module")
 	if moduleName == ""{
-		mlog.Fatalf("Please input module name")
+		mlog.Fatalf("Please input module name, ex.-m=gf-app")
 		return
 	}
 	if linkInfo != "" {

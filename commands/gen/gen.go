@@ -59,6 +59,8 @@ func Run() {
 	switch genType {
 	case "model":
 		doGenModel(parser)
+	case "service" :
+		doGenService(parser)
 	}
 
 }
