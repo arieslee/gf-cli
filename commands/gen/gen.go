@@ -47,6 +47,7 @@ func Run() {
 		"g,group":  true,
 		"c,config": true,
 		"p,prefix": true,
+		"m,module":true,
 	})
 	if err != nil {
 		mlog.Fatal(err)
@@ -59,4 +60,5 @@ func Run() {
 	case "model":
 		doGenModel(parser)
 	}
+
 }

@@ -7,4 +7,6 @@ require (
 	github.com/olekukonko/tablewriter v0.0.1
 )
 
+replace github.com/gogf/gf => /Volumes/HDD/workshop/go/project/github.com/gf
+
 go 1.10
