@@ -17,6 +17,7 @@ import (
 
 const (
 	DEFAULT_GEN_SERVICE_PATH = "./app/service"
+	DEFULAT_GEN_BASE_PATH = "./app"
 )
 
 func genBaseService()  {
@@ -31,7 +32,13 @@ func genBaseService()  {
 // doGenModel implements the "gen model" command.
 func doGenService(parser *gcmd.Parser) {
 	var err error
-	genPath := parser.GetArg(3, DEFAULT_GEN_SERVICE_PATH)
+	basePath := parser.GetOpt("path")
+	if basePath == ""{
+		basePath = DEFULAT_GEN_BASE_PATH
+	}
+	genPath := basePath + "/service"
+	modelGenPath := basePath + "/model"
+	//genPath := parser.GetArg(3, DEFAULT_GEN_SERVICE_PATH)
 	if !gfile.IsEmpty(genPath) {
 		s := gcmd.Scanf("path '%s' is not empty, files might be overwrote, continue? [y/n]: ", genPath)
 		if strings.EqualFold(s, "n") {
@@ -47,6 +54,7 @@ func doGenService(parser *gcmd.Parser) {
 	//要忽略的列前缀
 	prefixArray := gstr.SplitAndTrim(parser.GetOpt("prefix"), ",")
 	moduleName := parser.GetOpt("module")
+
 	if moduleName == ""{
 		mlog.Fatalf("Please input module name, ex.-m=gf-app")
 		return
@@ -104,7 +112,7 @@ func doGenService(parser *gcmd.Parser) {
 			variable = variable[cutLen:len(variable)]
 		}
 		//生成model
-		generateModelContentFile(db, table, variable, genPath, configGroup)
+		generateModelContentFile(db, table, variable, modelGenPath, configGroup)
 		//生成service
 		generateServiceContentFile(table, variable, moduleName)
 	}
@@ -121,7 +129,7 @@ func generateServiceContentFile(table,variable,moduleName string)  {
 		"{moduleName}":moduleName,
 	})
 	fileName := gstr.SnakeCase(variable)
-	path := gfile.Join(folderPath, fileName, fileName+"_service.go")
+	path := gfile.Join(folderPath, fileName+"_service.go")
 	if err := gfile.PutContents(path, strings.TrimSpace(serviceContent)); err != nil {
 		mlog.Fatalf("writing content to '%s' failed: %v", path, err)
 	} else {
