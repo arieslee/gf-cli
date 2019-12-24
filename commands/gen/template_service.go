@@ -7,6 +7,13 @@
 package gen
 
 const templateBaseServiceContent = `
+/*
+@Time : {nowTime}
+@Author : sunmoon
+@File : {tableName}
+@Software: GoLand
+@generator: gf-cli
+*/
 package service
 
 import (
@@ -136,66 +143,72 @@ func (bs *BaseService) FindBy(table string, params map[string]interface{}) *gdb.
 `
 
 const templateConstServiceContent = `
-package service
+/*
+@Time : {nowTime}
+@Author : sunmoon
+@File : {tableName}
+@Software: GoLand
+@generator: gf-cli
+*/
+package {tableName}
 
 import (
 	"errors"
-	"{moduleName}/app/model"
+	"{moduleName}/app/model/{tableName}"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
-	"github.com/gogf/gf/util/gvalid"
 )
 
-type PostService struct {
-	Base *BaseService
+type {UpperTableName}Service struct {
+	Base *service.BaseService
 }
 
 func New{UpperTableName}Service() *{UpperTableName}Service {
 	return &{UpperTableName}Service{
-		Base: new(BaseService),
+		Base: new(service.BaseService),
 	}
 }
-func (ser *{UpperTableName}Service) CountBy(where string ,params []interface{}) (int, error){
+func (s *{UpperTableName}Service) CountBy(where string ,params []interface{}) (int, error){
 	count ,err := model.Model{fullTableName}.Where(where, params).Count()
 	if err != nil{
 		return 0, err
 	}
 	return count, nil
 }
-func (service *{UpperTableName}Service) ListBy(r *ghttp.Request,where string, params[]interface{}, page int, pageSize int, orderBy string)(map[string]interface{}, int, error){
-	tableName := model.Table{fullTableName}
+func (s *{UpperTableName}Service) ListBy(r *ghttp.Request,where string, params[]interface{}, page int, pageSize int, orderBy string)(map[string]interface{}, int, error){
+	tableName := {tableName}.Table
 	listInput := map[string]interface{}{
 		"where":where,
 		"params":params,
 		"orderBy":orderBy,
 		"select":"p.id,p.created_at,p.title",
 	}
-	result,err := service.Base.List(r,tableName+" AS p", listInput)
+	result,err := s.Base.List(r,tableName+" AS p", listInput)
 	if  err!=nil {
 		return result, gconv.Int(result["totalCount"]), errors.New(err.Error())
 	}
 	return result, gconv.Int(result["totalCount"]), nil
 }
 
-func (service *{UpperTableName}Service) FindBy(where string, params []interface{}) (*model.BingoPost, error) {
-	var post *model.{fullTableName}
+func (s *{UpperTableName}Service) FindBy(where string, params []interface{}) (*{tableName}.{UpperTableName}, error) {
+	var post *{tableName}.{UpperTableName}
 	input := map[string]interface{}{
 		"where":where,
 		"params":params,
 	}
-	ar := service.Base.FindBy(model.Table{fullTableName},input)
+	ar := s.Base.FindBy({tableName}.Table,input)
 	err := ar.Struct(&post)
 	return post,err
 }
-func (service *{UpperTableName}Service) FindById(id int) (*model.{fullTableName}, error){
+func (s *{UpperTableName}Service) FindById(id int) (*{tableName}.{UpperTableName}, error){
 	where := "id=?"
 	var params []interface{}
 	params = append(params, id)
-	post, err := service.FindBy(where,params)
+	post, err := s.FindBy(where,params)
 	return post, err
 }
-func (ps *{UpperTableName}Service) Create(r *ghttp.Request) (*model.{fullTableName},error) {
+func (s *{UpperTableName}Service) Create(r *ghttp.Request) (*{tableName}.{UpperTableName},error) {
 	request := r.GetPostMap()
 	//rules := map[string]string {
 	//	"title"  : "required|length:1,200",
@@ -222,7 +235,7 @@ func (ps *{UpperTableName}Service) Create(r *ghttp.Request) (*model.{fullTableNa
 	}
 	return post, nil
 }
-func (ps *{UpperTableName}Service) Update(r *ghttp.Request) (*model.{fullTableName}, error) {
+func (ps *{UpperTableName}Service) Update(r *ghttp.Request) (*{tableName}.{UpperTableName}, error) {
 	request := r.GetPostMap()
 	//rules := map[string]string {
 	//	"title"  : "required|length:1,200",
@@ -246,7 +259,7 @@ func (ps *{UpperTableName}Service) Update(r *ghttp.Request) (*model.{fullTableNa
 	db := g.DB()
 	db.SetDebug(true)
 	params := []interface{}{post.Id}
-	_, err:=db.Table(model.{fullTableName}).Data(post).Where("id=?", params).Update()
+	_, err:=db.Table({tableName}.Table).Data(post).Where("id=?", params).Update()
 	if err != nil{
 		return post, errors.New(err.Error())
 	}

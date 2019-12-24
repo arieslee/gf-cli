@@ -11,17 +11,19 @@ import (
 	"github.com/gogf/gf/text/gstr"
 	_ "github.com/lib/pq"
 	"strings"
+	"time"
+
 	//_ "github.com/mattn/go-oci8"
 	//_ "github.com/mattn/go-sqlite3"
 )
 
 const (
-	DEFAULT_GEN_SERVICE_PATH = "./app/service"
+	DEFAULT_GEN_SERVICE_PATH = "service"
 	DEFULAT_GEN_BASE_PATH = "./app"
 )
 
 func genBaseService()  {
-	file := DEFAULT_GEN_SERVICE_PATH + gfile.Separator + "base_service.go"
+	file := DEFULAT_GEN_BASE_PATH + gfile.Separator + DEFAULT_GEN_SERVICE_PATH + gfile.Separator + "base_service.go"
 	isExists := gfile.Exists(file)
 	if !isExists{
 		if err := gfile.PutContents(file, templateBaseServiceContent); err != nil {
@@ -115,21 +117,24 @@ func doGenService(parser *gcmd.Parser) {
 		generateModelContentFile(db, table, variable, modelGenPath, configGroup)
 		//生成service
 		generateServiceContentFile(table, variable, moduleName)
+		//生成api
+		generateApiContentFile(table,variable, moduleName)
 	}
 	mlog.Print("done!")
 }
 func generateServiceContentFile(table,variable,moduleName string)  {
-	fullTableName := gstr.CamelCase(table)
 	UpperTableName := gstr.CamelCase(variable)
-	folderPath := DEFAULT_GEN_SERVICE_PATH
-
+	folderPath := DEFULAT_GEN_BASE_PATH + gfile.Separator + DEFAULT_GEN_SERVICE_PATH
+	nowTime := time.Now().Format("2006-01-02 15:16:17")
 	serviceContent := gstr.ReplaceByMap(templateConstServiceContent, g.MapStrStr{
-		"{fullTableName}": fullTableName,
+		"{fullTableName}": variable,
+		"{tableName}":variable,
+		"{nowTime}":nowTime,
 		"{UpperTableName}":UpperTableName,
 		"{moduleName}":moduleName,
 	})
 	fileName := gstr.SnakeCase(variable)
-	path := gfile.Join(folderPath, fileName+"_service.go")
+	path := gfile.Join(folderPath, fileName, fileName+".go")
 	if err := gfile.PutContents(path, strings.TrimSpace(serviceContent)); err != nil {
 		mlog.Fatalf("writing content to '%s' failed: %v", path, err)
 	} else {

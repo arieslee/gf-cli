@@ -18,7 +18,20 @@ import (
 type arModel struct {
 	Model *gdb.Model
 }
-
+func (r *{TplModelName}) SelectByFields() *gdb.Model {
+   v := reflect.ValueOf({TplModelName}{})
+   count := v.NumField()
+   t := v.Type()
+   var buffer bytes.Buffer
+   for i := 0; i < count; i++ {
+      fieldName := t.Field(i).Tag.Get("json")
+      buffer.WriteString(fieldName)
+      buffer.WriteString(",")
+   }
+   str := buffer.String()
+   fields := str[0 : len(str)-1]
+   return g.DB("default").Table(Table).Fields(fields)
+}
 var (
 	// Table is the table name of {TplTableName}.
 	Table = "{TplTableName}"

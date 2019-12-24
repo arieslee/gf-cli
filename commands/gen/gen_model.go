@@ -14,6 +14,8 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/olekukonko/tablewriter"
 	"strings"
+	"time"
+
 	//_ "github.com/mattn/go-oci8"
 	//_ "github.com/mattn/go-sqlite3"
 )
@@ -147,8 +149,10 @@ import (
 	}
 	// entity
 	path = gfile.Join(folderPath, packageName, fileName+"_entity.go")
+	nowTime := time.Now().Format("2006-01-02 15:16:17")
 	entityContent := gstr.ReplaceByMap(templateEntityContent, g.MapStrStr{
 		"{TplTableName}":      table,
+		"{nowTime}" : nowTime,
 		"{TplModelName}":      camelName,
 		"{TplGroupName}":      groupName,
 		"{TplPackageName}":    packageName,
