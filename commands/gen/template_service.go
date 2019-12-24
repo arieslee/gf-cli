@@ -222,7 +222,7 @@ func (s *{UpperTableName}Service) Create(r *ghttp.Request) (*{tableName}.{UpperT
 	//	"cid":"请选择分类",
 	//	"intro":"摘要的长度只多只能为500个字符",
 	//}
-	post := &{tableName}.{UpperTableName}
+	post := &{tableName}.{UpperTableName}{}
 	//if bindErr := r.GetRequestToStruct(post);bindErr!=nil{
 	//	return post,bindErr
 	//}
@@ -249,7 +249,7 @@ func (ps *{UpperTableName}Service) Update(r *ghttp.Request) (*{tableName}.{Upper
 	//	"cid":"请选择分类",
 	//	"intro":"摘要的长度只多只能为500个字符",
 	//}
-	post := &{tableName}.{UpperTableName}
+	post := &{tableName}.{UpperTableName}{}
 	//if bindErr := r.GetRequestToStruct(post);bindErr!=nil{
 	//	return post,errors.New(bindErr.Error())
 	//}
