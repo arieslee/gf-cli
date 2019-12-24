@@ -24,6 +24,14 @@ import (
 type arModel struct {
 	Model *gdb.Model
 }
+
+var (
+	// Table is the table name of {TplTableName}.
+	Table = "{TplTableName}"
+	// Model is the model object of {TplTableName}.
+	Model = &arModel{g.DB("{TplGroupName}").Table(Table).Safe()}
+)
+// select数据表中的所有字段，用来避免select *
 func (r *{TplModelName}) SelectByFields() *gdb.Model {
    v := reflect.ValueOf({TplModelName}{})
    count := v.NumField()
@@ -38,13 +46,6 @@ func (r *{TplModelName}) SelectByFields() *gdb.Model {
    fields := str[0 : len(str)-1]
    return g.DB("default").Table(Table).Fields(fields)
 }
-var (
-	// Table is the table name of {TplTableName}.
-	Table = "{TplTableName}"
-	// Model is the model object of {TplTableName}.
-	Model = &arModel{g.DB("{TplGroupName}").Table(Table).Safe()}
-)
-
 // TX sets the transaction for current operation.
 func (m *arModel) TX(tx *gdb.TX) *arModel {
 	return &arModel{m.Model.TX(tx)}
