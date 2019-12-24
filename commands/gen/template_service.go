@@ -7,13 +7,12 @@
 package gen
 
 const templateBaseServiceContent = `
-/*
-@Time : {nowTime}
-@Author : sunmoon
-@File : {tableName}
-@Software: GoLand
-@generator: gf-cli
-*/
+// ==========================================================================
+// @Time : {nowTime}
+// @Author : sunmoon
+// @File : {tableName}
+// @generator: gf-cli
+// ==========================================================================
 package service
 
 import (

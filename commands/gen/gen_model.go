@@ -131,6 +131,7 @@ import (
 		fileName += "_table"
 	}
 	// index
+	nowTime := time.Now().Format("2006-01-02 15:16:17")
 	path := gfile.Join(folderPath, packageName, fileName+".go")
 	if !gfile.Exists(path) {
 		indexContent := gstr.ReplaceByMap(templateIndexContent, g.MapStrStr{
@@ -138,6 +139,7 @@ import (
 			"{TplModelName}":      camelName,
 			"{TplGroupName}":      groupName,
 			"{TplPackageName}":    packageName,
+			"{nowTime}" : nowTime,
 			"{TplPackageImports}": packageImports,
 			"{TplStructDefine}":   structDefine,
 		})
@@ -149,7 +151,6 @@ import (
 	}
 	// entity
 	path = gfile.Join(folderPath, packageName, fileName+"_entity.go")
-	nowTime := time.Now().Format("2006-01-02 15:16:17")
 	entityContent := gstr.ReplaceByMap(templateEntityContent, g.MapStrStr{
 		"{TplTableName}":      table,
 		"{nowTime}" : nowTime,
