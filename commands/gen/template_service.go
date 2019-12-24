@@ -154,6 +154,7 @@ package {tableName}
 import (
 	"errors"
 	"{moduleName}/app/model/{tableName}"
+    "{moduleName}/app/model/service"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
@@ -169,7 +170,7 @@ func New{UpperTableName}Service() *{UpperTableName}Service {
 	}
 }
 func (s *{UpperTableName}Service) CountBy(where string ,params []interface{}) (int, error){
-	count ,err := model.Model{fullTableName}.Where(where, params).Count()
+	count ,err := {tableName}.Model.Where(where, params).Count()
 	if err != nil{
 		return 0, err
 	}
@@ -208,7 +209,7 @@ func (s *{UpperTableName}Service) FindById(id int) (*{tableName}.{UpperTableName
 	return post, err
 }
 func (s *{UpperTableName}Service) Create(r *ghttp.Request) (*{tableName}.{UpperTableName},error) {
-	request := r.GetPostMap()
+	//request := r.GetPostMap()
 	//rules := map[string]string {
 	//	"title"  : "required|length:1,200",
 	//	"content"  : "required",
@@ -221,7 +222,7 @@ func (s *{UpperTableName}Service) Create(r *ghttp.Request) (*{tableName}.{UpperT
 	//	"cid":"请选择分类",
 	//	"intro":"摘要的长度只多只能为500个字符",
 	//}
-	//post := &model.BingoPost{}
+	post := &{tableName}.{UpperTableName}
 	//if bindErr := r.GetRequestToStruct(post);bindErr!=nil{
 	//	return post,bindErr
 	//}
@@ -235,7 +236,7 @@ func (s *{UpperTableName}Service) Create(r *ghttp.Request) (*{tableName}.{UpperT
 	return post, nil
 }
 func (ps *{UpperTableName}Service) Update(r *ghttp.Request) (*{tableName}.{UpperTableName}, error) {
-	request := r.GetPostMap()
+	//request := r.GetPostMap()
 	//rules := map[string]string {
 	//	"title"  : "required|length:1,200",
 	//	"content"  : "required",
@@ -248,7 +249,7 @@ func (ps *{UpperTableName}Service) Update(r *ghttp.Request) (*{tableName}.{Upper
 	//	"cid":"请选择分类",
 	//	"intro":"摘要的长度只多只能为500个字符",
 	//}
-	//post := &model.{tableStruct}
+	post := &{tableName}.{UpperTableName}
 	//if bindErr := r.GetRequestToStruct(post);bindErr!=nil{
 	//	return post,errors.New(bindErr.Error())
 	//}
