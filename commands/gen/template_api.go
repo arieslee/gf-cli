@@ -40,23 +40,28 @@ func New{UpperTableName}Api() *{UpperTableName}Api {
 	}
 }
 // 创建
-func CreateHandler(r *ghttp.Request) {
-    r.Response.Writeln("this is create @ {tableName}")
+// 自动生成可以修改或删除
+func (a *{UpperTableName}Api) CreateHandler(r *ghttp.Request) {
+    r.Response.Writeln("this is create @ {UpperTableName}Api")
 }
 // 更新
-func UpdateHandler(r *ghttp.Request) {
-    r.Response.Writeln("this is update @ {tableName}")
+// 自动生成可以修改或删除
+func (a *{UpperTableName}Api) UpdateHandler(r *ghttp.Request) {
+    r.Response.Writeln("this is update @ {UpperTableName}Api")
 }
 // 删除
-func DeleteHandler(r *ghttp.Request) {
-    r.Response.Writeln("this is delete @ {tableName}")
+// 自动生成可以修改或删除
+func (a *{UpperTableName}Api) DeleteHandler(r *ghttp.Request) {
+    r.Response.Writeln("this is delete @ {UpperTableName}Api")
 }
-// list
-func ListHandler(r *ghttp.Request) {
-    r.Response.Writeln("this is list @ {tableName}")
+// 列表
+// 自动生成可以修改或删除
+func (a *{UpperTableName}Api) ListHandler(r *ghttp.Request) {
+    r.Response.Writeln("this is list @ {UpperTableName}Api")
 }
-// view
-func DetailHandler(r *ghttp.Request) {
-    r.Response.Writeln("this is detail @ {tableName}")
+// 详情
+// 自动生成可以修改或删除
+func (a *{UpperTableName}Api) DetailHandler(r *ghttp.Request) {
+    r.Response.Writeln("this is detail @ {UpperTableName}Api")
 }
 `
