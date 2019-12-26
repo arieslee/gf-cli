@@ -10,7 +10,7 @@ const templateBaseServiceContent = `
 // ==========================================================================
 // @Time : {nowTime}
 // @Author : sunmoon
-// @File : {tableName}
+// @File : base_service.go
 // @generator: gf-cli
 // ==========================================================================
 package service
@@ -145,7 +145,7 @@ const templateConstServiceContent = `
 /*
 @Time : {nowTime}
 @Author : sunmoon
-@File : {tableName}
+@File : {tableName}.go
 @Software: GoLand
 @generator: gf-cli
 */
@@ -192,14 +192,14 @@ func (s *{UpperTableName}Service) ListBy(r *ghttp.Request,where string, params[]
 }
 
 func (s *{UpperTableName}Service) FindBy(where string, params []interface{}) (*{tableName}.{UpperTableName}, error) {
-	var post *{tableName}.{UpperTableName}
+	var row *{tableName}.{UpperTableName}
 	input := map[string]interface{}{
 		"where":where,
 		"params":params,
 	}
 	ar := s.Base.FindBy({tableName}.Table,input)
 	err := ar.Struct(&post)
-	return post,err
+	return row,err
 }
 func (s *{UpperTableName}Service) FindById(id int) (*{tableName}.{UpperTableName}, error){
 	where := "id=?"

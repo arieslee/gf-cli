@@ -6,18 +6,39 @@
 */
 package gen
 
+
+const templateBaseApiContent = `
+// ==========================================================================
+// @Author : sunmoon
+// @generator: gf-cli
+// ==========================================================================
+package api
+
+type BaseApi struct {
+
+}
+`
+
 const templateConstApiContent = `
 // ==========================================================================
 // @Time : {nowTime}
 // @Author : sunmoon
-// @File : {tableName}
+// @File : {tableName}.go
 // @generator: gf-cli
 // ==========================================================================
 package {tableName}
 import (
+    "{moduleName}/app/api"
     "github.com/gogf/gf/net/ghttp"
 )
-
+type {UpperTableName}Api struct {
+	Base *api.BaseApi
+}
+func New{UpperTableName}Api() *{UpperTableName}Api {
+	return &{UpperTableName}Api{
+		Base: new(api.BaseApi),
+	}
+}
 // 创建
 func CreateHandler(r *ghttp.Request) {
     r.Response.Writeln("this is create @ {tableName}")

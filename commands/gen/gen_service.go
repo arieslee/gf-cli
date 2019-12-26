@@ -117,6 +117,8 @@ func doGenService(parser *gcmd.Parser) {
 		generateModelContentFile(db, table, variable, modelGenPath, configGroup)
 		//生成service
 		generateServiceContentFile(table, variable, moduleName)
+		//生成baseApi
+		genBaseApi()
 		//生成api
 		generateApiContentFile(table,variable, moduleName)
 	}

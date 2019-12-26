@@ -18,7 +18,15 @@ const (
 	DEFAULT_GEN_API_PATH = "api"
 )
 // doGenModel implements the "gen model" command.
-
+func genBaseApi()  {
+	file := DEFULAT_GEN_BASE_PATH + gfile.Separator + DEFAULT_GEN_API_PATH + gfile.Separator + "base_api.go"
+	isExists := gfile.Exists(file)
+	if !isExists{
+		if err := gfile.PutContents(file, templateBaseApiContent); err != nil {
+			mlog.Fatalf("write base api file to '%s' failed: %v", file, err)
+		}
+	}
+}
 func generateApiContentFile(table,variable,moduleName string)  {
 	UpperTableName := gstr.CamelCase(variable)
 	folderPath := DEFULAT_GEN_BASE_PATH + gfile.Separator + DEFAULT_GEN_API_PATH
